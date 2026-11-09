@@ -3,11 +3,12 @@ import { contactBlock, demoCta, ctaRow, guardrail } from "../site.mjs";
 export default {
   file: "contact.html",
   title: "Contact",
-  description: "Contact the LayerProof team about research collaboration, field-data collaboration, pilot opportunities, or feedback from agencies, contractors and testing organizations.",
+  description: "Contact the VERNIQEL team about research collaboration, field-data collaboration, pilot opportunities, or feedback from agencies, contractors and testing organizations.",
   body: (cfg) => `
 <section class="page-head"><div class="wrap">
+  <p class="eyebrow">Partner with us</p>
   <h1>Contact and collaboration</h1>
-  <p>Interested in evaluating LayerProof on a real intelligent-compaction project?</p>
+  <p>Interested in evaluating VERNIQEL on a real intelligent-compaction project?</p>
 </div></section>
 
 <section class="sec"><div class="wrap sec-grid">
@@ -29,7 +30,7 @@ export default {
 <section class="sec sec-alt"><div class="wrap sec-grid">
   <div class="sec-head"><h2>What to expect</h2></div>
   <div class="sec-body">
-    <p>LayerProof is a research prototype. It is not commercially available and is not production-certified. A first conversation is about whether your data and workflow are a fit for an evaluation, and what such an evaluation could and could not show.</p>
+    <p>VERNIQEL is a research prototype. It is not commercially available and is not production-certified. A first conversation is about whether your data and workflow are a fit for an evaluation, and what such an evaluation could and could not show.</p>
     ${guardrail()}
   </div>
 </div></section>

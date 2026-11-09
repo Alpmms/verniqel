@@ -33,96 +33,96 @@
  },
  {
   "id": "data-datasets",
-  "src": "docs/screenshots/week2/09-data-home.png",
+  "src": "docs/screenshots/v21/synthetic-data.png",
   "milestone": "Canonical data ingestion",
   "crop": [
    262,
-   56,
-   1706,
-   972
+   52,
+   1490,
+   920
   ],
-  "data": "Real MnDOT IC sample rows and real FHWA LTPP DCP records (not co-located, never paired)",
+  "data": "SYNTHETIC demonstration project (labelled SYNTHETIC DEMO DATA in the application; fictional stations, not field data)",
   "shows": "Imported datasets, versions and ingestion runs",
+  "alt": "LayerProof Data page listing synthetic demonstration datasets, their versions and ingestion runs.",
   "pages": [
    "product#data"
   ],
-  "alt": "LayerProof Data page listing imported datasets, their versions and ingestion runs.",
   "sizes": {
    "1400": {
     "file": "data-datasets-1400.webp",
-    "width": 1400,
-    "height": 888,
-    "bytes": 38002
+    "width": 1228,
+    "height": 868,
+    "bytes": 50746
    },
    "760": {
     "file": "data-datasets-760.webp",
     "width": 760,
-    "height": 482,
-    "bytes": 14644
+    "height": 537,
+    "bytes": 24162
    }
   }
  },
  {
   "id": "evidence-validation",
-  "src": "docs/screenshots/week3/01-ic-validation-l0-l3.png",
+  "src": "docs/screenshots/v21/synthetic-evidence.png",
   "milestone": "Validation & sufficiency",
   "crop": [
    262,
-   56,
-   1706,
-   1440
+   52,
+   1490,
+   900
   ],
-  "data": "Real MnDOT IC sample rows",
-  "shows": "Validation levels L0\u2013L3 with findings that block spatial and temporal use until confirmed",
+  "data": "SYNTHETIC demonstration project (labelled SYNTHETIC DEMO DATA in the application; fictional stations, not field data)",
+  "shows": "Validation levels L0\u2013L5 with findings, including the absence of source coordinates, which blocks spatial use",
+  "alt": "LayerProof Evidence page with validation levels and a table of findings for a synthetic roller dataset.",
   "pages": [
    "index#screens",
    "product#evidence"
   ],
-  "alt": "LayerProof Evidence page with validation levels L0 to L3 and a table of findings.",
   "sizes": {
    "1400": {
     "file": "evidence-validation-1400.webp",
-    "width": 1400,
-    "height": 1342,
-    "bytes": 136298
+    "width": 1228,
+    "height": 848,
+    "bytes": 61898
    },
    "760": {
     "file": "evidence-validation-760.webp",
     "width": 760,
-    "height": 728,
-    "bytes": 48942
+    "height": 525,
+    "bytes": 29498
    }
   }
  },
  {
-  "id": "map-ic",
-  "src": "docs/screenshots/week4/01-map-all-passes-cmv.png",
-  "milestone": "Map & evidence workspace",
+  "id": "twin-plan",
+  "src": "docs/screenshots/v21/synthetic-twin-plan.png",
+  "milestone": "V2.1 Construction Evidence Twin",
   "crop": [
-   262,
-   56,
-   1706,
-   1085
+   362,
+   925,
+   1386,
+   1366
   ],
-  "data": "Real MnDOT IC sample rows; the ringed spot markers are a labelled SYNTHETIC fixture",
-  "shows": "IC observations on the map coloured by the vendor's source metric, with the evidence-in-view panel",
+  "data": "SYNTHETIC demonstration project (labelled SYNTHETIC DEMO DATA in the application; fictional stations, not field data)",
+  "shows": "The evidence twin plan view: stations along a recorded alignment, lanes, separate symbols per evidence family, conflicts, where LayerProof stopped and a moved field task",
+  "alt": "Station-by-lane plan of a synthetic subbase lift with evidence symbols, conflict markers and a hatched strip where LayerProof stopped.",
   "pages": [
    "index#screens",
    "product#map"
   ],
-  "alt": "LayerProof Map page showing intelligent-compaction observations along a road alignment with layer controls and an evidence summary.",
   "sizes": {
    "1400": {
-    "file": "map-ic-1400.webp",
-    "width": 1400,
-    "height": 998,
-    "bytes": 100084
+    "file": "twin-plan-1400.webp",
+    "width": 1024,
+    "height": 441,
+    "bytes": 48980
    },
    "760": {
-    "file": "map-ic-760.webp",
+    "file": "twin-plan-760.webp",
     "width": 760,
-    "height": 542,
-    "bytes": 36454
+    "height": 327,
+    "bytes": 32062
    }
   }
  },
@@ -222,33 +222,33 @@
   }
  },
  {
-  "id": "support-no-anchor-mndot",
-  "src": "docs/screenshots/week6/06-mndot-no-physical-anchor.png",
+  "id": "support-no-anchor-synthetic",
+  "src": "docs/screenshots/v21/synthetic-no-anchor.png",
   "milestone": "Evidence support & abstention",
   "crop": [
-   262,
-   1228,
-   1706,
-   2430
+   362,
+   200,
+   1386,
+   1040
   ],
-  "data": "Real MnDOT IC sample rows (no physical tests exist for them)",
-  "shows": "IC data without any physical test: every unit NO_PHYSICAL_ANCHOR, inference ABSTAIN",
+  "data": "SYNTHETIC demonstration project (labelled SYNTHETIC DEMO DATA in the application; fictional stations, not field data)",
+  "shows": "A location with roller coverage and no physical test: LayerProof stops with MISSING_PHYSICAL_ANCHOR",
+  "alt": "Location detail for a synthetic station: roller coverage present, no physical evidence, and the panel LayerProof stopped here with the reason No physical anchor.",
   "pages": [
    "evidence#ic-only"
   ],
-  "alt": "LayerProof evidence support panel for an IC-only dataset: all units have no physical anchor.",
   "sizes": {
    "1400": {
-    "file": "support-no-anchor-mndot-1400.webp",
-    "width": 1400,
-    "height": 1165,
-    "bytes": 93282
+    "file": "support-no-anchor-synthetic-1400.webp",
+    "width": 1024,
+    "height": 840,
+    "bytes": 62612
    },
    "760": {
-    "file": "support-no-anchor-mndot-760.webp",
+    "file": "support-no-anchor-synthetic-760.webp",
     "width": 760,
-    "height": 633,
-    "bytes": 34986
+    "height": 623,
+    "bytes": 40388
    }
   }
  },
@@ -318,33 +318,33 @@
   }
  },
  {
-  "id": "map-candidates",
-  "src": "docs/screenshots/week7/06-mndot-map-candidates.png",
-  "milestone": "Verification candidate prioritization",
+  "id": "twin-verification",
+  "src": "docs/screenshots/v21/synthetic-twin-verification.png",
+  "milestone": "V2.1 Construction Evidence Twin",
   "crop": [
-   262,
-   56,
-   1706,
-   1085
+   362,
+   925,
+   1386,
+   1520
   ],
-  "data": "Real MnDOT IC sample rows",
-  "shows": "Candidates drawn as neutral rings on the map with the inspector open",
+  "data": "SYNTHETIC demonstration project (labelled SYNTHETIC DEMO DATA in the application; fictional stations, not field data)",
+  "shows": "Verification across the project: by station and lane, the conflicts, abstention reasons, open cases, candidates and field tasks",
+  "alt": "Table of synthetic stations with conflicts, abstention reasons, open cases, verification candidates and field tasks.",
   "pages": [
    "product#verify"
   ],
-  "alt": "LayerProof Map page with neutral ring markers for verification candidates and an inspector panel.",
   "sizes": {
    "1400": {
-    "file": "map-candidates-1400.webp",
-    "width": 1400,
-    "height": 998,
-    "bytes": 73898
+    "file": "twin-verification-1400.webp",
+    "width": 1024,
+    "height": 595,
+    "bytes": 40944
    },
    "760": {
-    "file": "map-candidates-760.webp",
+    "file": "twin-verification-760.webp",
     "width": 760,
-    "height": 542,
-    "bytes": 25824
+    "height": 442,
+    "bytes": 25348
    }
   }
  },
@@ -471,6 +471,266 @@
     "width": 760,
     "height": 243,
     "bytes": 11432
+   }
+  }
+ },
+ {
+  "id": "v16-case-head",
+  "src": "docs/screenshots/verniqel/case-head.png",
+  "milestone": "V1.6 Pilot Edition",
+  "crop": [
+   0,
+   0,
+   2420,
+   1554
+  ],
+  "data": "Synthetic product-demo project (labelled SYNTHETIC in the application; not field data); taken from the running VERNIQEL build, 2026-11-09",
+  "shows": "A verification case: state, conflict and abstention labels, the decision-support disclaimer, the evidence map and the ordered list of what would resolve it",
+  "pages": [
+   "index#hero",
+   "product#cases"
+  ],
+  "alt": "Verification case VC-0003 with status chips, a schematic evidence map and a panel titled What would resolve this?",
+  "interface": "verniqel",
+  "sizes": {
+   "1400": {
+    "file": "v16-case-head-1400.webp",
+    "width": 1400,
+    "height": 899,
+    "bytes": 77582
+   },
+   "760": {
+    "file": "v16-case-head-760.webp",
+    "width": 760,
+    "height": 488,
+    "bytes": 31666
+   }
+  }
+ },
+ {
+  "id": "v16-case-resolve",
+  "src": "docs/screenshots/verniqel/case-resolve.png",
+  "milestone": "V1.6 Pilot Edition",
+  "crop": [
+   0,
+   0,
+   910,
+   1966
+  ],
+  "data": "Synthetic product-demo project (labelled SYNTHETIC in the application; not field data); taken from the running VERNIQEL build, 2026-11-09",
+  "shows": "What would resolve this? \u2014 missing evidence ordered by a documented product-policy rule, each item saying what it addresses",
+  "pages": [
+   "product#resolve"
+  ],
+  "alt": "A list of missing evidence items, each with what it addresses and what it strengthens",
+  "interface": "verniqel",
+  "sizes": {
+   "1400": {
+    "file": "v16-case-resolve-1400.webp",
+    "width": 910,
+    "height": 1966,
+    "bytes": 125822
+   },
+   "760": {
+    "file": "v16-case-resolve-760.webp",
+    "width": 760,
+    "height": 1642,
+    "bytes": 103092
+   }
+  }
+ },
+ {
+  "id": "v16-why-here",
+  "src": "docs/screenshots/verniqel/case-why-here.png",
+  "milestone": "V1.6 Pilot Edition",
+  "crop": [
+   0,
+   0,
+   910,
+   1982
+  ],
+  "data": "Synthetic product-demo project (labelled SYNTHETIC in the application; not field data); taken from the running VERNIQEL build, 2026-11-09",
+  "shows": "Why here? \u2014 why the candidate exists, what a test there may resolve, what it will not resolve, and its scientific state",
+  "pages": [
+   "index#explain",
+   "product#why"
+  ],
+  "alt": "Verification recommendation panel listing reasons, what the test may resolve and what it will not resolve",
+  "interface": "verniqel",
+  "sizes": {
+   "1400": {
+    "file": "v16-why-here-1400.webp",
+    "width": 910,
+    "height": 1982,
+    "bytes": 128604
+   },
+   "760": {
+    "file": "v16-why-here-760.webp",
+    "width": 760,
+    "height": 1655,
+    "bytes": 105808
+   }
+  }
+ },
+ {
+  "id": "v16-conflict",
+  "src": "docs/screenshots/verniqel/conflict-card.png",
+  "milestone": "V1.6 Pilot Edition",
+  "crop": [
+   0,
+   0,
+   766,
+   1670
+  ],
+  "data": "Synthetic product-demo project (labelled SYNTHETIC in the application; not field data); taken from the running VERNIQEL build, 2026-11-09",
+  "shows": "A conflict card: why it matters, applicability, possible explanations and what would reduce uncertainty",
+  "pages": [
+   "index#disagreement",
+   "product#conflicts"
+  ],
+  "alt": "Conflict card for two disagreeing density results with possible explanations and the statement that LayerProof does not decide which evidence is correct",
+  "interface": "verniqel",
+  "sizes": {
+   "1400": {
+    "file": "v16-conflict-1400.webp",
+    "width": 766,
+    "height": 1670,
+    "bytes": 106500
+   },
+   "760": {
+    "file": "v16-conflict-760.webp",
+    "width": 760,
+    "height": 1657,
+    "bytes": 105652
+   }
+  }
+ },
+ {
+  "id": "v16-queue",
+  "src": "docs/screenshots/verniqel/case-queue.png",
+  "milestone": "V1.6 Pilot Edition",
+  "crop": [
+   0,
+   0,
+   2345,
+   1610
+  ],
+  "data": "Synthetic product-demo project (labelled SYNTHETIC in the application; not field data); taken from the running VERNIQEL build, 2026-11-09",
+  "shows": "The verification case queue with descriptive states and filters, and no risk or quality score",
+  "pages": [
+   "product#cases"
+  ],
+  "alt": "Table of four verification cases with location, trigger, evidence, conflict, applicability and abstention columns",
+  "interface": "verniqel",
+  "sizes": {
+   "1400": {
+    "file": "v16-queue-1400.webp",
+    "width": 1400,
+    "height": 961,
+    "bytes": 71104
+   },
+   "760": {
+    "file": "v16-queue-760.webp",
+    "width": 760,
+    "height": 522,
+    "bytes": 29720
+   }
+  }
+ },
+ {
+  "id": "v16-overview",
+  "src": "docs/screenshots/verniqel/overview.png",
+  "milestone": "V1.6 Pilot Edition",
+  "crop": [
+   0,
+   0,
+   2420,
+   1124
+  ],
+  "data": "Synthetic product-demo project (labelled SYNTHETIC in the application; not field data); taken from the running VERNIQEL build, 2026-11-09",
+  "shows": "Project Overview: evidence items, open cases, conflicts, abstaining cases and pilot studies",
+  "pages": [
+   "product#overview"
+  ],
+  "alt": "Project overview dashboard with counts of evidence items, open cases, conflicts and abstaining cases",
+  "interface": "verniqel",
+  "sizes": {
+   "1400": {
+    "file": "v16-overview-1400.webp",
+    "width": 1400,
+    "height": 650,
+    "bytes": 45876
+   },
+   "760": {
+    "file": "v16-overview-760.webp",
+    "width": 760,
+    "height": 353,
+    "bytes": 19546
+   }
+  }
+ },
+ {
+  "id": "v16-pilot",
+  "src": "docs/screenshots/verniqel/pilot.png",
+  "milestone": "V1.6 Pilot Edition",
+  "crop": [
+   0,
+   0,
+   2420,
+   618
+  ],
+  "data": "Synthetic product-demo project (labelled SYNTHETIC in the application; not field data); taken from the running VERNIQEL build, 2026-11-09",
+  "shows": "Pilot mode: study fields and the ten-step freeze-before-reveal stepper",
+  "pages": [
+   "pilot#mode",
+   "workflow#pilot"
+  ],
+  "alt": "Pilot study header with objective, stopping rule, arms and a ten-step workflow stepper",
+  "interface": "verniqel",
+  "sizes": {
+   "1400": {
+    "file": "v16-pilot-1400.webp",
+    "width": 1400,
+    "height": 358,
+    "bytes": 39734
+   },
+   "760": {
+    "file": "v16-pilot-760.webp",
+    "width": 760,
+    "height": 194,
+    "bytes": 15484
+   }
+  }
+ },
+ {
+  "id": "v16-cannot",
+  "src": "docs/screenshots/verniqel/case-cannot.png",
+  "milestone": "V1.6 Pilot Edition",
+  "crop": [
+   0,
+   0,
+   1412,
+   772
+  ],
+  "data": "Synthetic product-demo project (labelled SYNTHETIC in the application; not field data); taken from the running VERNIQEL build, 2026-11-09",
+  "shows": "What the evidence cannot conclude for this case",
+  "pages": [
+   "workflow#abstain"
+  ],
+  "alt": "Panel listing what the current evidence cannot conclude",
+  "interface": "verniqel",
+  "sizes": {
+   "1400": {
+    "file": "v16-cannot-1400.webp",
+    "width": 1400,
+    "height": 765,
+    "bytes": 86158
+   },
+   "760": {
+    "file": "v16-cannot-760.webp",
+    "width": 760,
+    "height": 416,
+    "bytes": 43670
    }
   }
  }

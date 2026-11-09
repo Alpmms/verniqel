@@ -1,293 +1,161 @@
-import { shot, guardrail, demoCta, ctaRow, contactBlock, laneStrip, results } from "../site.mjs";
-import { week8Table, statesGrid, notClaims, externalStatement, spatialStatement, spatialVerdict, spatialCounts, spatialGrid } from "./_parts.mjs";
+import { shot, results, TRUST, DISCLAIMER, workflowDiagram, claim, demoCta } from "../site.mjs";
+import { spatialStatement, spatialVerdict, spatialCounts } from "./_parts.mjs";
 
 const soil = results.week5.find((r) => r.run === "A_dry_density_soil_layer1");
 const ugm = results.week5.find((r) => r.run === "A_dry_density_UGM_layer2");
 const m = (x) => `${x < 0 ? "−" : "+"}${Math.abs(x).toFixed(2)}`;
 
+// Small line icons (original, 24 px grid, stroke only).
+const I = {
+  provenance: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 14l2 2 4-4"/></svg>`,
+  applicability: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>`,
+  disagreement: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg>`,
+  abstention: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>`,
+};
+
 export default {
   file: "index.html",
-  title: "LayerProof",
+  title: "VERNIQEL",
   body: (cfg) => `
-<section class="hero" id="hero">
+<section class="hero hero-dm" id="hero" aria-labelledby="hero-title">
   <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <p class="product-name">LayerProof</p>
-        <h1>Know where to test next.</h1>
-        <p class="lede">Evidence-aware construction quality assurance for intelligent compaction workflows.</p>
-        <p>Intelligent-compaction data can cover most of a construction site, while physical verification stays sparse. LayerProof brings both together with the project context, shows where the evidence does not support an interpretation, and helps engineers weigh where another physical test may add useful evidence.</p>
-        <p class="cta-row">
-          <a class="btn btn-primary" href="product.html">Explore the product</a>
-          <a class="btn btn-line" href="#how">See how it works</a>
-          <a class="btn btn-line" href="research.html">View the evidence</a>
-        </p>
-        <p class="hero-guard">${"Decision support only — final engineering decisions remain with the engineer."}</p>
-      </div>
-      ${shot("verify-candidates", "The Verify workspace on real field-trial data: candidate locations for another physical test, ordered by evidence gap.", { eager: true })}
+    <div class="hero-copy">
+      <h1 id="hero-title"><span>Evidence</span> <span>before</span> <span>decisions.</span></h1>
+      <p class="lede">Field verification for pavement and earthwork.</p>
+      <p class="cta-row">
+        <a class="btn btn-primary" href="workflow.html">Explore the workflow</a>
+        <a class="btn btn-line" href="pilot.html">Partner on a pilot</a>
+        ${demoCta(cfg)}
+      </p>
+      <p class="trust">${TRUST}</p>
     </div>
-    ${laneStrip()}
+  </div>
+  <img class="hero-mark" src="assets/brand/mark-outline.svg" width="236" height="225" alt="" aria-hidden="true">
+</section>
+
+<section class="intro" id="intro" aria-labelledby="intro-title">
+  <div class="wrap intro-grid">
+    <div>
+      <p class="formerly">Research prototype · Formerly LayerProof</p>
+      <h2 id="intro-title">Know when the evidence is enough.</h2>
+      <p class="lead">VERNIQEL brings roller data, physical tests and field observations into one auditable verification case — showing where the evidence agrees, where it conflicts, and when it is not enough to conclude.</p>
+      <p>The decision stays with the engineer. VERNIQEL keeps it open while the evidence is not enough, and shows what would change that.</p>
+      <p class="intro-links"><a href="#principles">What it keeps in view</a> <a href="research.html">View the evidence</a></p>
+    </div>
+    ${shot("v16-case-head", "A verification case: its state, the evidence map and what would resolve it.", { eager: true })}
   </div>
 </section>
 
-<section class="sec" id="problem">
-  <div class="wrap sec-grid">
-    <div class="sec-head">
-      <h2>Dense roller data, sparse tests</h2>
-      <p>The hard part is not collecting data. It is knowing what the data you have can support.</p>
-    </div>
-    <div class="sec-body">
-      <div class="sources">
-        <div><span class="dens">thousands of rows per lift</span><h3>Intelligent-compaction data</h3><p>Roller measurement values, pass counts and positions logged continuously across the mat.</p></div>
-        <div><span class="dens">a handful of points</span><h3>Physical field tests</h3><p>Density, moisture, LWD or DCP results at chosen spots. Which of these exist differs from project to project.</p></div>
-        <div><span class="dens">often incomplete</span><h3>Project context</h3><p>Layers, lifts, rollers, coordinate reference, time zone and units that decide whether the two can be compared at all.</p></div>
-      </div>
-      <p class="question">Where is the evidence strong enough to interpret, where is it not, and where could one more physical test add the most?</p>
-      <p>LayerProof does not replace field testing. It keeps the roller data and the tests side by side, with the provenance of both, so that the next test is chosen with the gaps in view.</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec sec-alt" id="how">
-  <div class="wrap sec-grid">
-    <div class="sec-head">
-      <h2>How LayerProof works</h2>
-      <p>Seven workspaces, in the order an engineer would use them.</p>
-    </div>
-    <div class="sec-body">
-      <ol class="pipe">
-        <li><strong>Project</strong><span>Metadata, lifts, rollers, coordinate reference</span></li>
-        <li><strong>Data</strong><span>Import roller and test files, keep the originals</span></li>
-        <li><strong>Evidence</strong><span>Validate structure, location, time and units</span></li>
-        <li><strong>Map</strong><span>See coverage, tests and their associations</span></li>
-        <li><strong>Science</strong><span>Evaluate real paired evidence, report what it shows</span></li>
-        <li><strong>Verify</strong><span>Rank candidate locations by evidence gap</span></li>
-        <li><strong>Pilot</strong><span>Review, decide, test, update the evidence</span></li>
-      </ol>
-      <p class="sub"><a href="product.html">Walk through each workspace with real screens</a></p>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="screens">
+<section class="statement" id="problem">
   <div class="wrap">
-    <div class="sec-grid">
-      <div class="sec-head"><h2>The product, as built</h2><p>These are screenshots of the working application on real data, not mock-ups.</p></div>
-      <div class="sec-body">
-        ${shot("map-ic", "<strong>Map.</strong> Roller observations coloured by the vendor's own metric, with the evidence in view listed on the right.")}
-      </div>
+    <p class="eyebrow">The problem</p>
+    <h2>More data does not automatically mean a better decision.</h2>
+    <div class="cols">
+      <div><h3>Roller data is dense</h3><p>Intelligent-compaction systems log thousands of measurement values per lift. They describe the roller's response, in the vendor's own units — not density, not stiffness.</p></div>
+      <div><h3>Physical tests are sparse</h3><p>Density, moisture, LWD or DCP results exist at a handful of spots, and each answers a different question about the layer.</p></div>
+      <div><h3>Context decides what is comparable</h3><p>Layer, lift, pass, time, position and calibration decide whether two pieces of evidence can be compared at all.</p></div>
     </div>
-    <div class="shot-pair sec-full">
-      ${shot("evidence-validation", "<strong>Evidence.</strong> Validation findings state exactly what blocks spatial or temporal use of a dataset.")}
-      ${shot("science-gate", "<strong>Science.</strong> A gate lists every condition real data must meet before any model result is shown.")}
-    </div>
+    <p class="kicker">When those sources disagree, or simply do not overlap, the useful answer is often “the evidence is not enough yet” — and what would change that.</p>
   </div>
 </section>
 
-<section class="sec sec-alt" id="abstention">
+<section class="sec sec-alt" id="principles">
   <div class="wrap">
-    <div class="sec-grid">
-      <div class="sec-head">
-        <h2>Evidence support and abstention</h2>
-        <p>Each location and pass gets a state that describes the evidence, never the construction.</p>
-      </div>
-      <div class="sec-body">
-        ${statesGrid()}
-        <p class="table-note">These states describe whether evidence is available and applicable. They say nothing about construction quality, which is why the site and the application do not colour them as pass or fail.</p>
-        <p class="sub"><a href="evidence.html">How the states are assigned</a></p>
-      </div>
-    </div>
-    <div class="sec-full">${shot("support-abstain-sparc", "The application abstains from inference on the field-trial data and says why.", { wide: true })}</div>
-  </div>
-</section>
-
-<section class="sec" id="science">
-  <div class="wrap sec-grid">
-    <div class="sec-head">
-      <h2>What the evidence showed</h2>
-      <p>LayerProof reports negative and inconclusive results as they are.</p>
-    </div>
-    <div class="sec-body">
-      <p class="lead">On a real field trial, simple models built from roller values did not predict dry density at held-out test locations.</p>
-      <ul class="facts">
-        <li><strong>UGM layer 2, ${ugm.locations} locations</strong>Linear-model R² ${m(ugm.ols_r2)}; random forest ${m(ugm.rf_r2)}</li>
-        <li><strong>Soil layer 1, ${soil.locations} locations</strong>Linear-model R² ${m(soil.ols_r2)}; random forest ${m(soil.rf_r2)}</li>
-      </ul>
-      <p>A negative R² means the model did worse than predicting the mean. With results like these, no predictive model is treated as validated and no predictive uncertainty is reported. LayerProof is designed to abstain when evidence is insufficient rather than manufacture confidence.</p>
-      <p><a href="research.html">Read the full results and method</a></p>
+    <p class="eyebrow">What VERNIQEL keeps in view</p>
+    <h2>Four questions before any interpretation.</h2>
+    <div class="pillars">
+      <article class="pillar"><div class="ic">${I.provenance}</div><h3>Provenance</h3><p>Where did this result come from? Every file is fingerprinted, versioned and kept with its source, parser version and import history.</p></article>
+      <article class="pillar"><div class="ic">${I.applicability}</div><h3>Applicability</h3><p>Can it be located, aligned in time and compared with the other evidence here? If not, VERNIQEL says which condition fails.</p></article>
+      <article class="pillar" id="disagreement"><div class="ic">${I.disagreement}</div><h3>Disagreement</h3><p>When aligned evidence disagrees, it goes to a conflict queue with possible explanations. The software never picks the correct result.</p></article>
+      <article class="pillar"><div class="ic">${I.abstention}</div><h3>Abstention</h3><p>When the evidence cannot support a conclusion, VERNIQEL abstains and lists what cannot be concluded and what would resolve it.</p></article>
     </div>
   </div>
 </section>
 
-<section class="sec" id="verify">
+<section class="sec on-dark" id="workflow">
   <div class="wrap">
-    <div class="sec-grid">
-      <div class="sec-head">
-        <h2>Where another test may help</h2>
-        <p>Verification candidates are ordered by how much evidence is missing, using components you can read.</p>
-      </div>
-      <div class="sec-body">
-        <p>For each candidate location LayerProof shows seven components: whether a physical test exists there, the evidence-support state, the separation from existing tests, gaps in layer and pass context, gaps in the measured range, roller-data coverage, and how many nearby units a test there would newly anchor.</p>
-        <p>They combine into one ordering value, <span class="code">EVIDENCE_GAP_PRIORITY</span>. The weights are explicit product-policy settings that anyone can inspect. They are not engineering acceptance criteria.</p>
-        ${guardrail("Decision support only — final test location selection remains with the engineer.")}
-        ${shot("verify-components", "Every candidate opens to its components, weights and plain-language reasons.")}
-      </div>
-    </div>
+    <p class="eyebrow">The workflow</p>
+    <h2>One verification question, from first evidence to a recorded answer.</h2>
+    <p>Each question becomes a verification case. The evidence is frozen into a snapshot, disagreement is listed, the case abstains or proceeds, a physical test is planned with its reason, and the engineer's resolution is appended to a hash-chained record.</p>
+    ${workflowDiagram()}
+    <p style="margin-top:28px"><a href="workflow.html">Walk through the workflow</a></p>
   </div>
 </section>
 
-<section class="sec sec-alt" id="retrospective">
+<section class="sec" id="explain">
+  <div class="wrap feature">
+    <div>
+      <p class="eyebrow">Why here?</p>
+      <h2>A recommendation should explain itself.</h2>
+      <p>Every verification recommendation says why it exists, what a test at that location may resolve — and what it will not resolve. Its scientific state is stated next to it: a research recommendation, not calibrated and not validated prospectively.</p>
+      <p>${claim("why-here")}</p>
+    </div>
+    ${shot("v16-why-here", "The Why here? panel for one recommendation, on synthetic demonstration data.")}
+  </div>
+</section>
+
+<section class="sec sec-alt" id="engineer">
+  <div class="wrap feature flip">
+    <div>
+      <p class="eyebrow">Engineering judgment</p>
+      <h2>The engineer remains the decision-maker.</h2>
+      <p>For each recommendation the engineer can accept it, change the location, change the test type, reject it or defer it — always with a reason. The decision is appended next to the original recommendation, which is never rewritten.</p>
+      <ul class="decisions" aria-label="Engineer decision options"><li>Accept</li><li>Change location</li><li>Change modality</li><li>Reject</li><li>Defer</li></ul>
+      <p class="disclaimer">${DISCLAIMER}</p>
+    </div>
+    ${shot("v16-conflict", "A conflict card. VERNIQEL lists possible explanations and does not decide which evidence is correct.")}
+  </div>
+</section>
+
+<section class="sec" id="prospective">
   <div class="wrap sec-grid">
-    <div class="sec-head">
-      <h2>Retrospective check</h2>
-      <p>We tested the ranking against history and report the answer as it came out.</p>
-    </div>
+    <div class="sec-head"><p class="eyebrow">Pilot mode</p><h2>Built for prospective evaluation.</h2></div>
     <div class="sec-body">
-      <p>Real historical test locations were hidden from LayerProof one at a time. The pipeline was rerun without them, and we measured how highly each hidden location was ranked, against two simple baselines.</p>
-      <p><span class="verdict">${results.week8_overall}</span></p>
-      <p>The frozen ranking policy did not show a clear advantage over the baselines on the available data. Two of six layer-and-design combinations showed a limited signal; the other four did not, and none reached the pre-declared threshold for an observed signal.</p>
-      ${week8Table("soil_layer1")}
-      <p class="plain-note">This is a retrospective evaluation on 8 and 13 historical locations from one trial. It is not a prospective field pilot, and a historical test location is not proof of the best possible location.</p>
-      <p><a href="research.html#retrospective">See both layers and all three designs</a></p>
+      <p class="lead">VERNIQEL includes infrastructure for prospective field evaluation. Prospective performance has not yet been established.</p>
+      <p>In pilot mode the engineer's plan is frozen before the VERNIQEL recommendation is revealed, and the database refuses any other order. Study arms are fixed by the protocol, outcomes are recorded as measured, and estimated or scenario figures are labelled as such.</p>
+      <p>${claim("pilot-infra")} ${claim("prioritization-value")}</p>
+      <p><a href="pilot.html">How a pilot works</a></p>
     </div>
   </div>
 </section>
 
-<section class="sec" id="external">
-  <div class="wrap sec-grid">
-    <div class="sec-head">
-      <h2>External evidence</h2>
-      <p>Public data from other sources, examined with the same methods and no tuning.</p>
-    </div>
-    <div class="sec-body">
-      <div class="twoq">
-        <div><h3>Two public asphalt datasets</h3><p>Does a roller measurement value relate to physical density in a way that holds on groups the model has not seen?</p><p>${externalStatement()} Neither dataset has coordinates, so they say nothing about where to test next.</p><p><a href="research.html#external">See the asphalt analysis</a></p></div>
-        <div><h3>Published MnROAD field data with positions</h3><p>When tests are added one at a time, does the frozen priority recover the untested values faster than simple baselines?</p><p>${spatialStatement()}</p><p><a href="#nchrp">See the spatial benchmark</a></p></div>
-      </div>
-      <p class="plain-note">Both are published, aggregated data examined outside the project workflow. Neither is a prospective field pilot.</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec sec-alt" id="nchrp">
+<section class="sec sec-alt" id="negative">
   <div class="wrap">
-    <div class="sec-grid">
-      <div class="sec-head">
-        <h2>External Spatial Benchmark — NCHRP 933 / MnROAD</h2>
-        <p>A retrospective external spatial evaluation on a public field dataset.</p>
-      </div>
-      <div class="sec-body">
-        <p>NCHRP Research Report 933 publishes, in its Appendix F, roller and spot-test results from proof mapping on four MnROAD cells (185, 186, 188 and 189) in 2017. Subgrade and base were tested in each cell, which gives eight nominal strata. For every stratum the report lists a roller compaction meter value (CMV), a light weight deflectometer (LWD) modulus and a falling weight deflectometer (FWD) modulus on a small grid.</p>
-        ${spatialGrid()}
-        <h3 class="sub">Retrospective design</h3>
-        <p>Four tests were made visible and every other LWD or FWD value was hidden. The frozen LayerProof priority, with its accepted settings and no tuning, chose the next position; the published value there was revealed; and this was repeated for 15 tests. LWD and FWD were evaluated separately. The same replay was run with random choice and with spatial maximin, which always picks the position farthest from the tests taken so far. The measure was how well the tests taken so far reconstruct the values still hidden.</p>
-        <p>${spatialVerdict()}</p>
-        <p>${spatialStatement()}</p>
-        ${spatialCounts()}
-        <p>The rule set before the run asked for an advantage over both baselines. The frozen priority did better than spatial maximin more often than not, and was level with or behind random choice in most combinations.</p>
-        <h3 class="sub">Limitations</h3>
-        <ul>
-          <li>Retrospective replay of published values. No test was placed in the field because of LayerProof.</li>
-          <li>One field study at one facility; published, buffer-averaged and rounded values, not raw files.</li>
-          <li>The two sandy-subgrade strata could not be evaluated because their test positions are not exact in the source.</li>
-          <li>Reconstruction error barely fell as tests were added under any strategy, so the benchmark has limited power.</li>
-        </ul>
-        <p class="plain-note">Source: NCHRP Research Report 933, Appendix F, Transportation Research Board. The report's tables and figures are not reproduced here; the graphics are original and drawn from derived results. No endorsement by NCHRP, TRB, MnDOT, MnROAD or the report's authors is implied.</p>
-        <p><a href="research.html#external-spatial">Method, per-stratum results and all limitations</a></p>
-      </div>
+    <p class="eyebrow">Research record</p>
+    <h2>Negative results stay visible.</h2>
+    <p>The questions VERNIQEL was tested on, and the answers as they came out. Nothing was tuned after the results were known.</p>
+    <div class="negres">
+      <div><h3>Retrospective check on a field trial</h3><span class="verdict">${results.week8_overall}</span><p>Historical test locations were hidden one at a time. The frozen ranking did not show a clear advantage over simple baselines.</p></div>
+      <div><h3>External spatial benchmark</h3>${spatialVerdict()}<p>${spatialStatement()}</p></div>
+      <div><h3>Roller values and physical density</h3><span class="verdict">NO PREDICTIVE MODEL ACCEPTED</span><p>On a real field trial, simple models built from roller values did worse than a mean baseline at held-out locations (linear-model R² ${m(ugm.ols_r2)} on UGM layer 2, ${m(soil.ols_r2)} on soil layer 1). Roller values did not show a stable universal relationship with physical density.</p></div>
+      <div><h3>Prospective field performance</h3><span class="verdict">NOT YET ESTABLISHED</span><p>No prospective field pilot has been run. That is the open question a pilot partner would help answer.</p></div>
     </div>
+    ${spatialCounts()}
+    <p class="table-note">The external benchmark is a retrospective external spatial evaluation on published NCHRP 933 / MnROAD data. No endorsement by NCHRP, TRB, MnDOT, MnROAD or any report author is implied.</p>
+    <p><a href="research.html">Read the full research record</a></p>
   </div>
 </section>
 
-<section class="sec" id="pilot">
-  <div class="wrap sec-grid">
-    <div class="sec-head">
-      <h2>Built for a pilot</h2>
-      <p>The workflow an engineer would follow on a live project is implemented end to end.</p>
-    </div>
-    <div class="sec-body">
-      <ol class="pipe pipe-7">
-        <li><strong>Import</strong><span>Roller and test files, originals kept</span></li>
-        <li><strong>Validate</strong><span>Findings and blockers</span></li>
-        <li><strong>Evidence</strong><span>What is paired, what is not</span></li>
-        <li><strong>Support</strong><span>A state for each location and pass</span></li>
-        <li><strong>Verify</strong><span>Candidates, ranked with reasons; the engineer decides</span></li>
-        <li><strong>Field test</strong><span>Taken by the project team</span></li>
-        <li><strong>Update</strong><span>Evidence before and after</span></li>
-      </ol>
-      ${shot("pilot-readiness", "The readiness checklist lists what a pilot needs. It is not a construction or quality status.")}
-      <p class="sub"><a href="pilot.html">How a pilot would run</a></p>
-    </div>
-  </div>
-</section>
-
-<section class="sec sec-alt" id="traceability">
-  <div class="wrap sec-grid">
-    <div class="sec-head">
-      <h2>Provenance and trust</h2>
-      <p>Every result can be followed back to the file it came from.</p>
-    </div>
-    <div class="sec-body">
-      <ol class="chain">
-        <li>source file</li><li>file hash</li><li>dataset version</li><li>validation run</li><li>association run</li><li>science run</li><li>support assessment</li><li>candidate run</li><li>retrospective and pilot history</li><li>engineer decision</li><li>new physical evidence</li>
-      </ol>
-      <p class="sub">Source files are stored unchanged and fingerprinted. Datasets are versioned. Runs and decisions are append-only records that the application cannot edit or delete, so the history of how a conclusion was reached stays intact.</p>
-      ${shot("provenance-fingerprint", "A stored file with its SHA-256 fingerprint and integrity checks.")}
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="capabilities">
-  <div class="wrap sec-grid">
-    <div class="sec-head">
-      <h2>Current capabilities</h2>
-      <p>Implemented is not the same as shown in the field. Both are stated.</p>
-    </div>
-    <div class="sec-body">
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Capability status">
-      <table class="cap">
-        <thead><tr><th scope="col">Capability</th><th scope="col">Implemented</th><th scope="col">Prospective field pilot</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Foundation and provenance</th><td><span class="tag tag-done">Complete</span></td><td><span class="tag tag-open">Not yet</span></td></tr>
-          <tr><th scope="row">Canonical data ingestion</th><td><span class="tag tag-done">Complete</span></td><td><span class="tag tag-open">Not yet</span></td></tr>
-          <tr><th scope="row">Validation and sufficiency</th><td><span class="tag tag-done">Complete</span></td><td><span class="tag tag-open">Not yet</span></td></tr>
-          <tr><th scope="row">Map and evidence workspace</th><td><span class="tag tag-done">Complete</span></td><td><span class="tag tag-open">Not yet</span></td></tr>
-          <tr><th scope="row">Real paired scientific baseline</th><td><span class="tag tag-done">Complete</span></td><td><span class="tag tag-open">Not yet</span></td></tr>
-          <tr><th scope="row">Evidence support and abstention</th><td><span class="tag tag-done">Complete</span></td><td><span class="tag tag-open">Not yet</span></td></tr>
-          <tr><th scope="row">Verification candidate prioritization</th><td><span class="tag tag-done">Complete</span></td><td><span class="tag tag-open">Not yet</span></td></tr>
-          <tr><th scope="row">Retrospective check on the field trial</th><td><span class="tag tag-done">Complete</span> — result: no clear advantage</td><td><span class="tag tag-open">Not yet</span></td></tr>
-          <tr><th scope="row">External asphalt datasets</th><td><span class="tag tag-done">Complete</span> — result: no stable universal relationship</td><td><span class="tag tag-open">Not applicable</span></td></tr>
-          <tr><th scope="row">External spatial evaluation, MnROAD</th><td><span class="tag tag-done">Complete</span> — retrospective; result: no clear advantage</td><td><span class="tag tag-open">Not applicable</span></td></tr>
-          <tr><th scope="row">Pilot workflow</th><td><span class="tag tag-done">Complete</span> — software workflow</td><td><span class="tag tag-open">No pilot run yet</span></td></tr>
-          <tr><th scope="row">Read-only demonstration</th><td><span class="tag tag-done">Packaged</span>${cfg.demoUrl ? " and hosted" : " — not publicly hosted"}</td><td><span class="tag tag-open">Not applicable</span></td></tr>
-        </tbody>
-      </table></div>
-      <h3 class="sub">What LayerProof is not</h3>
-      ${notClaims()}
-    </div>
-  </div>
-</section>
-
-<section class="sec sec-alt" id="team">
-  <div class="wrap sec-grid">
-    <div class="sec-head"><h2>Team</h2><p>LayerProof is developed by two co-founders.</p></div>
-    <div class="sec-body">
-      <div class="team">
-        <div class="person"><h3>Metehan Alp Memis</h3><p class="role">Co-Founder</p><p>PhD Student, Civil &amp; Environmental Engineering, University of Illinois Urbana-Champaign. Transportation infrastructure, pavement engineering and intelligent compaction.</p></div>
-        <div class="person"><h3>Şevval Ulus Memiş</h3><p class="role">Co-Founder</p><p>M.S. Data Science, Maryville University. Background in computer engineering and data science: machine learning, analytics and data workflows.</p></div>
-      </div>
-      <p class="plain-note">The universities named are the founders' affiliations. They do not own, sponsor or endorse LayerProof.</p>
-      <p class="sub"><a href="team.html">More about the team</a></p>
+<section class="sec" id="who">
+  <div class="wrap">
+    <p class="eyebrow">Who it is for</p>
+    <h2>Designed for workflows such as…</h2>
+    <div class="aud">
+      <div><h3>Agency field and materials engineers</h3><p>Reviewing questionable results and documenting why an additional test was or was not taken.</p></div>
+      <div><h3>Contractor quality-control teams</h3><p>Keeping roller data, tests and field observations together on one lift.</p></div>
+      <div><h3>Testing and inspection organizations</h3><p>Recording observations in the field and linking them to the evidence they question.</p></div>
+      <div><h3>Resident engineers</h3><p>Seeing which verification questions are open, abstaining or waiting on a test.</p></div>
+      <div><h3>Researchers</h3><p>Running prospective evaluations with a frozen, auditable protocol.</p></div>
+      <div><h3>Quality-assurance managers</h3><p>Exporting a verification evidence report with its provenance intact.</p></div>
     </div>
   </div>
 </section>
 
 <section class="cta-band" id="contact">
   <div class="wrap">
-    <h2>Interested in evaluating LayerProof with real intelligent-compaction and field-test data?</h2>
-    <p>We welcome conversations about field-data collaboration and pilot opportunities with transportation agencies, contractors, testing and quality-assurance organizations, and research groups.</p>
-    ${contactBlock(cfg)}
-    ${ctaRow(`<a class="btn btn-line" href="pilot.html">What a pilot involves</a>`, `<a class="btn btn-line" href="contact.html">Contact and collaboration</a>`, demoCta(cfg))}
+    <h2>Bring VERNIQEL alongside your existing workflow.</h2>
+    <p>A pilot runs next to your current acceptance process, not instead of it.</p>
+    <p class="cta-row"><a class="btn btn-primary" href="contact.html">Discuss a pilot</a><a class="btn btn-line" href="research.html">View research approach</a></p>
   </div>
 </section>
 `,

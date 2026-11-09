@@ -6,7 +6,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const dist = join(dirname(fileURLToPath(import.meta.url)), "..", "dist");
-const PAGES = ["index.html", "product.html", "evidence.html", "research.html", "pilot.html", "team.html", "contact.html", "404.html"];
+const PAGES = ["index.html", "product.html", "workflow.html", "research.html", "evidence.html", "pilot.html", "about.html", "contact.html", "404.html"];
 const ent = (s) => s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&nbsp;/g, " ");
 const inline = (s) => ent(s.replace(/<br\s*\/?>/g, " / ").replace(/<\/(strong|span|a|h3|i)>/g, " ").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim());
 function md(html) {
@@ -25,7 +25,7 @@ function md(html) {
   }
   return out.join("\n\n").replace(/\|\n\n\|/g, "|\n|");
 }
-console.log("# Final website content\n\nThe exact public copy of the LayerProof website, exported from the built pages by `tools/export-content.mjs`.\nThis is the canonical final public wording. Built with no demo URL and no contact address configured.\n");
+console.log("# Final website content\n\nThe exact public copy of the VERNIQEL website, exported from the built pages by `tools/export-content.mjs`.\nThis is the canonical final public wording. Built with no demo URL and no contact address configured.\n");
 for (const p of PAGES) {
   const html = readFileSync(join(dist, p), "utf8");
   console.log(`\n## ${p}\n`);

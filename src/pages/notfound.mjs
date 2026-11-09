@@ -1,7 +1,7 @@
 export default {
   file: "404.html",
   title: "Page not found",
-  description: "This page does not exist on the LayerProof website.",
+  description: "This page does not exist. Return to the VERNIQEL home page or browse the product workflow.",
   body: () => `
 <section class="page-head"><div class="wrap">
   <h1>Page not found</h1>

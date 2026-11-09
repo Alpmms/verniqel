@@ -4,11 +4,11 @@ import { statesGrid } from "./_parts.mjs";
 export default {
   file: "evidence.html",
   title: "Evidence",
-  description: "How LayerProof describes evidence support, when it abstains from inference, and how it keeps every result traceable to its source file.",
+  description: "How VERNIQEL describes evidence support, when it abstains from inference, and how it keeps every result traceable to its source file.",
   body: () => `
 <section class="page-head"><div class="wrap">
   <h1>Evidence, support and abstention</h1>
-  <p>LayerProof states what the available evidence can support at each location and pass, and declines to infer anything beyond it.</p>
+  <p>VERNIQEL states what the available evidence can support at each location and pass, and declines to infer anything beyond it.</p>
 </div></section>
 
 <section class="sec" id="states"><div class="wrap">
@@ -30,7 +30,7 @@ export default {
   <div class="sec-head"><h2>Abstention is a result</h2><p>Two states are reported on purpose, not left blank.</p></div>
   <div class="sec-body">
     <div class="codes">
-      <div><span class="code">PREDICTIVE_MODEL_NOT_VALIDATED</span><p>No criterion defines when a predictive baseline counts as validated, and the real held-out results do not support one. LayerProof reports those results as they are and makes no inference from them.</p></div>
+      <div><span class="code">PREDICTIVE_MODEL_NOT_VALIDATED</span><p>No criterion defines when a predictive baseline counts as validated, and the real held-out results do not support one. VERNIQEL reports those results as they are and makes no inference from them.</p></div>
       <div><span class="code">PREDICTIVE_UNCERTAINTY_NOT_AVAILABLE</span><p>Without a model that has passed validation there is no credible predictive uncertainty to report, so none is shown.</p></div>
     </div>
     <p class="sub">These are deliberate scientific states. An interface that always produced a number would hide exactly the cases an engineer most needs to see.</p>
@@ -41,8 +41,8 @@ export default {
 <section class="sec" id="ic-only"><div class="wrap sec-grid">
   <div class="sec-head"><h2>Roller data alone is not an anchor</h2><p>What happens when a project has intelligent-compaction data and no physical tests.</p></div>
   <div class="sec-body">
-    <p>On real MnDOT intelligent-compaction samples with a confirmed coordinate system and no physical tests, every one of the 246 grid cells is <span class="code">NO_PHYSICAL_ANCHOR</span>. The same data delivered without a confirmed coordinate system is <span class="code">UNRESOLVED_SPATIAL_REFERENCE</span> and is not drawn on the map at all.</p>
-    ${shot("support-no-anchor-mndot", "An IC-only dataset: coverage is high, physical evidence is zero, inference is withheld.")}
+    <p>Where roller data exists and no physical test does, every such location is <span class="code">NO_PHYSICAL_ANCHOR</span> and VERNIQEL stops there. Roller data delivered without a confirmed coordinate system is <span class="code">UNRESOLVED_SPATIAL_REFERENCE</span> and is not drawn on the map at all.</p>
+    ${shot("support-no-anchor-synthetic", "A location of the synthetic demonstration project with roller coverage and no physical test: VERNIQEL stops.")}
   </div>
 </div></section>
 

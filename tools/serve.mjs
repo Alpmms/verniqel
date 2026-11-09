@@ -31,4 +31,4 @@ createServer((req, res) => {
   if (!existsSync(file) && existsSync(file + ".html")) file += ".html"; // GitHub Pages also serves /page for page.html
   if (!file.startsWith(dist) || !existsSync(file)) return send(404, join(dist, "404.html"));
   send(200, file);
-}).listen(port, "127.0.0.1", () => console.log(`LayerProof website preview: http://127.0.0.1:${port}${base}`));
+}).listen(port, "127.0.0.1", () => console.log(`VERNIQEL website preview: http://127.0.0.1:${port}${base}`));

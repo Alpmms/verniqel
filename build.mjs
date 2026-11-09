@@ -28,7 +28,7 @@ if (basePath && !basePath.endsWith("/")) basePath += "/";
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(join(dist, "assets"), { recursive: true });
 
-const names = ["index", "product", "evidence", "research", "pilot", "team", "contact", "notfound"];
+const names = ["index", "product", "workflow", "research", "evidence", "pilot", "about", "contact", "team", "notfound"];
 const built = [];
 for (const n of names) {
   const p = (await import(`./src/pages/${n}.mjs`)).default;
@@ -43,6 +43,7 @@ for (const n of names) {
 cpSync(join(root, "src/assets/styles.css"), join(dist, "assets/styles.css"));
 cpSync(join(root, "src/assets/site.js"), join(dist, "assets/site.js"));
 cpSync(join(root, "src/assets/fonts"), join(dist, "assets/fonts"), { recursive: true });
+cpSync(join(root, "src/assets/brand"), join(dist, "assets/brand"), { recursive: true });
 mkdirSync(join(dist, "assets/shots"));
 for (const f of readdirSync(join(root, "src/assets/shots"))) if (f.endsWith(".webp")) cpSync(join(root, "src/assets/shots", f), join(dist, "assets/shots", f));
 for (const f of ["og.png"]) cpSync(join(root, "src/assets", f), join(dist, "assets", f));
@@ -51,7 +52,7 @@ writeFileSync(join(dist, ".nojekyll"), "");
 const site = cfg.siteUrl.replace(/\/$/, "");
 writeFileSync(join(dist, "robots.txt"), `User-agent: *\nAllow: /\n${site ? `Sitemap: ${site}/sitemap.xml\n` : ""}`);
 if (site) {
-  const urls = built.filter((f) => f !== "404.html").map((f) => `  <url><loc>${site}/${f === "index.html" ? "" : f}</loc></url>`).join("\n");
+  const urls = built.filter((f) => f !== "404.html" && f !== "team.html").map((f) => `  <url><loc>${site}/${f === "index.html" ? "" : f}</loc></url>`).join("\n");
   writeFileSync(join(dist, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
 }
 console.log(`Built ${built.length} pages into dist/ (demo ${cfg.demoUrl ? "linked" : "not linked"}, contact ${cfg.contactEmail || cfg.contactFormUrl ? "set" : "not set"}, site URL ${site || "not set"})`);

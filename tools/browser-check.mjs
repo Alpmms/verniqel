@@ -14,11 +14,15 @@ const BASE = "/layerproof-site-check/", PORT = 4391, origin = `http://127.0.0.1:
 const b = spawnSync(process.execPath, [join(root, "build.mjs")], { env: { ...process.env, SITE_BASE_PATH: BASE }, stdio: "inherit" });
 if (b.status !== 0) process.exit(1);
 const server = spawn(process.execPath, [join(root, "tools/serve.mjs"), "--port", String(PORT), "--base", BASE], { stdio: "ignore" });
+// never leave the preview server running, even when the browser cannot start (a stale server on this port made a
+// later run check the wrong build)
+process.on("exit", () => server.kill());
+for (const sig of ["SIGTERM", "SIGINT"]) process.on(sig, () => process.exit(sig === "SIGINT" ? 130 : 143));
 await new Promise((r) => setTimeout(r, 700));
 const shots = process.env.SITE_SHOTS;
 if (shots) mkdirSync(shots, { recursive: true });
 const findings = [];
-const PAGES = ["index.html", "product.html", "evidence.html", "research.html", "pilot.html", "team.html", "contact.html"];
+const PAGES = ["index.html", "product.html", "workflow.html", "research.html", "evidence.html", "pilot.html", "about.html", "contact.html", "team.html"];
 const VIEWS = [["desktop", 1440, 900], ["tablet", 820, 1100], ["mobile", 390, 800]];
 const browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM_PATH || undefined, args: ["--no-sandbox"] });
 try {
@@ -46,16 +50,16 @@ try {
     if (!(await page.evaluate(() => document.activeElement?.classList.contains("skip")))) findings.push(`${name}: first Tab stop is not the skip link`);
     if (name === "mobile") {
       await page.locator(".nav-toggle").click();
-      if (!(await page.locator("#site-nav a", { hasText: "Team" }).isVisible())) findings.push("mobile: menu did not open");
-      await page.locator("#site-nav a", { hasText: "Team" }).click();
-      if (!page.url().endsWith("team.html")) findings.push("mobile: navigation link did not work");
+      if (!(await page.locator("#site-nav a", { hasText: "About" }).isVisible())) findings.push("mobile: menu did not open");
+      await page.locator("#site-nav a", { hasText: "About" }).click();
+      if (!page.url().endsWith("about.html")) findings.push("mobile: navigation link did not work");
     }
     // GitHub Pages serves 404.html for any missing path, at any depth
     const r = await page.goto(origin + BASE + "no/such/page", { waitUntil: "networkidle" });
     if (r.status() !== 404) findings.push(`${name}: missing path did not return 404`);
     if (!(await page.locator("h1", { hasText: "Page not found" }).isVisible())) findings.push(`${name}: 404 page not rendered`);
     const styled = await page.evaluate(() => getComputedStyle(document.querySelector(".site-head")).backgroundColor);
-    if (styled !== "rgb(24, 32, 43)") findings.push(`${name}: 404 page lost its stylesheet at a nested path`);
+    if (styled !== "rgba(32, 34, 30, 0.97)") findings.push(`${name}: 404 page lost its stylesheet at a nested path`);
     await page.locator("a[data-home]").first().click();
     if (!page.url().endsWith(BASE + "index.html")) findings.push(`${name}: 404 home link went to ${page.url()}`);
     await ctx.close();

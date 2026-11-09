@@ -1,6 +1,6 @@
-# LayerProof public website
+# VERNIQEL public website
 
-**What is LayerProof?** Evidence-aware construction quality assurance for intelligent compaction workflows. It keeps
+**What is VERNIQEL?** Formerly LayerProof. Field verification for pavement and earthwork: evidence-aware construction quality assurance for intelligent compaction workflows. It keeps
 roller data and physical field tests side by side, shows where the evidence does not support an interpretation, and
 helps engineers weigh where another physical test may add evidence. Decision support only — final engineering
 decisions remain with the engineer. This repository is the static public website; it does not contain the application.
@@ -38,4 +38,4 @@ decisions remain with the engineer. This repository is the static public website
   on missing required statements, and on any number that differs from the frozen results.
 - Screenshots are cropped copies of real application screens. No mock-ups.
 - Tables and figures of third-party reports are not reproduced. Graphics are original.
-- University names are affiliations only. No university, agency, programme or publisher endorses LayerProof.
+- University names are affiliations only. No university, agency, programme or publisher endorses VERNIQEL.

@@ -1,4 +1,4 @@
-import { shot, results } from "../site.mjs";
+import { shot, results, claimsTable } from "../site.mjs";
 import { week5Table, week8Table, week8Matrix, externalTable, externalDatasets, externalLabels, externalStatement, externalHead, externalNotAssessable, spatialData, spatialVerdict, spatialStatement, spatialCounts, spatialGrid, spatialDeltaChart, spatialTable, spatialAvailability, spatialLimits, spatialPct } from "./_parts.mjs";
 
 const SP = spatialData;
@@ -10,11 +10,28 @@ const moist = results.week5.find((r) => r.run === "B_moisture_lab_UGM_layer2");
 export default {
   file: "research.html",
   title: "Research",
-  description: "The scientific approach behind LayerProof: a real paired field-trial study, a retrospective check of the ranking, two public asphalt datasets and a retrospective external spatial evaluation on published MnROAD data, with negative results reported as they are.",
+  description: "The scientific approach behind VERNIQEL: a real paired field-trial study, a retrospective check of the ranking, two public asphalt datasets and a retrospective external spatial evaluation on published MnROAD data, with negative results reported as they are.",
   body: () => `
 <section class="page-head"><div class="wrap">
+  <p class="eyebrow">Research</p>
   <h1>The scientific approach</h1>
-  <p>LayerProof does not force a predictive claim when the evidence does not support one. This page gives the results in full, including the ones that did not go our way.</p>
+  <p>VERNIQEL does not force a predictive claim when the evidence does not support one. This page gives the results in full, including the ones that did not go our way.</p>
+</div></section>
+
+<section class="sec sec-alt" id="negative"><div class="wrap">
+  <h2>Negative results stay visible.</h2>
+  <p>Every result below was produced under a protocol frozen before the result was known, and is reproduced exactly from the archived code. The findings that did not favour VERNIQEL are reported first, because they shaped the product: VERNIQEL now keeps provenance, applicability, disagreement and abstention in view rather than claiming to locate where the next test should go.</p>
+  <ul class="facts" style="margin-top:20px">
+    <li><strong>Roller values and physical density</strong>Did not show a stable universal relationship; no predictive model is treated as validated.</li>
+    <li><strong>Retrospective ranking check</strong>${results.week8_overall} over simple baselines on one field trial.</li>
+    <li><strong>External spatial benchmark</strong>${spatialData.interpretation} on published MnROAD data.</li>
+    <li><strong>Prospective field performance</strong>Not yet established. VERNIQEL includes infrastructure for prospective field evaluation. Prospective performance has not yet been established.</li>
+  </ul>
+</div></section>
+
+<section class="sec" id="claims"><div class="wrap sec-grid">
+  <div class="sec-head"><h2>How established is each statement?</h2><p>Every capability statement on this site carries one of four statuses.</p></div>
+  <div class="sec-body">${claimsTable()}</div>
 </div></section>
 
 <section class="sec" id="study"><div class="wrap">
@@ -36,7 +53,7 @@ export default {
         <li>The laboratory-moisture row rests on ${moist.locations} independent locations. Its linear R² is high and its random-forest R² is negative on the same data. It is an observation about six points and must not be read as a validated relationship.</li>
         <li>For every evaluated row, predictive uncertainty is recorded as unresolved: it can be computed, but no source defines the tolerance that would make it credible. No sourced minimum sample size exists either, so statistical adequacy is also left unresolved.</li>
       </ul>
-      <p>The consequence in the product: no predictive map, no density or stiffness prediction, and no uncertainty band. LayerProof is designed to abstain when evidence is insufficient rather than manufacture confidence.</p>
+      <p>The consequence in the product: no predictive map, no density or stiffness prediction, and no uncertainty band. VERNIQEL is designed to abstain when evidence is insufficient rather than manufacture confidence.</p>
     </div>
   </div>
 </div></section>
@@ -53,7 +70,7 @@ export default {
   <div class="sec-grid">
     <div class="sec-head"><h2>Retrospective check on the field trial</h2><p>Does the candidate ranking put real historical test locations near the top?</p></div>
     <div class="sec-body">
-      <p>Historical physical-test locations are withheld from LayerProof, one location or one group at a time. The evidence, support and candidate pipeline is rerun without those anchors, with the ranking policy frozen. We then record how highly each hidden location is ranked and compare that with two baselines: ranking by missing anchor alone, and random order repeated 1,000 times with fixed seeds.</p>
+      <p>Historical physical-test locations are withheld from VERNIQEL, one location or one group at a time. The evidence, support and candidate pipeline is rerun without those anchors, with the ranking policy frozen. We then record how highly each hidden location is ranked and compare that with two baselines: ranking by missing anchor alone, and random order repeated 1,000 times with fixed seeds.</p>
       <p><span class="verdict">${results.week8_overall}</span></p>
       <p>That is the overall recorded outcome. The policy was not changed after seeing it.</p>
     </div>
@@ -83,7 +100,7 @@ export default {
     <div class="sec-head"><h2>External evidence: two asphalt datasets</h2><p>Two independent public asphalt datasets, examined with the same simple models and the same evidence gate.</p></div>
     <div class="sec-body">
       <p class="lead">${externalStatement()}</p>
-      <p>After the field-trial study, LayerProof was examined on two public asphalt compaction datasets from other sources. Both are tables published alongside research papers. They are processed values, not raw project files, and they carry no project names, sites or coordinates.</p>
+      <p>After the field-trial study, VERNIQEL was examined on two public asphalt compaction datasets from other sources. Both are tables published alongside research papers. They are processed values, not raw project files, and they carry no project names, sites or coordinates.</p>
       ${externalDatasets()}
       <h3 class="sub">What could be evaluated</h3>
       <p>Whether roller measurement values relate to a physical density reading in a way that holds when part of the data is held out, with each physical target kept separate: NNDG in one dataset, nuclear-gauge density and core density in the other.</p>
@@ -108,9 +125,9 @@ export default {
         <li><span class="code">${externalNotAssessable[1]}</span>. Neither dataset has coordinates, so nothing was learned about candidate ranking or where to test next.</li>
         <li>Transfer from one dataset to the other. They share no measurement value and no target, so no transfer test was run.</li>
       </ul>
-      <h3 class="sub">How LayerProof responded</h3>
-      <p>The evidence gate did not allow a scientific claim for either dataset: the roller values are published aggregates rather than row-level observations, there is no spatial reference, and the pairing of roller values with tests cannot be reproduced. Relative to the soil and granular evidence LayerProof holds, both datasets are out of domain in material, measurement values and physical target. LayerProof therefore abstains: no density prediction, no uncertainty band, no map and no candidates for these datasets.</p>
-      <p class="plain-note">Asphalt results say nothing about soil or granular layers, and the reverse. Metrics reported in the source publications, which used tuned models and random splits, are not LayerProof results and are not quoted here. The datasets carry no stated licence, so their records are not redistributed on this site.</p>
+      <h3 class="sub">How VERNIQEL responded</h3>
+      <p>The evidence gate did not allow a scientific claim for either dataset: the roller values are published aggregates rather than row-level observations, there is no spatial reference, and the pairing of roller values with tests cannot be reproduced. Relative to the soil and granular evidence VERNIQEL holds, both datasets are out of domain in material, measurement values and physical target. VERNIQEL therefore abstains: no density prediction, no uncertainty band, no map and no candidates for these datasets.</p>
+      <p class="plain-note">Asphalt results say nothing about soil or granular layers, and the reverse. Metrics reported in the source publications, which used tuned models and random splits, are not VERNIQEL results and are not quoted here. The datasets carry no stated licence, so their records are not redistributed on this site.</p>
     </div>
   </div>
 </div></section>
@@ -137,7 +154,7 @@ export default {
       <ol>
         <li>Four tests are visible at the start, one on each line, at positions drawn with a recorded seed.</li>
         <li>Every other LWD or FWD value is hidden from the ranking.</li>
-        <li>The frozen LayerProof priority, with its accepted settings, picks the next position. Nothing was tuned on this dataset.</li>
+        <li>The frozen VERNIQEL priority, with its accepted settings, picks the next position. Nothing was tuned on this dataset.</li>
         <li>The published value at that position is revealed and becomes a visible test.</li>
         <li>This repeats for ${SP.design.horizon} added tests, from ${SP.design.replicates} starting configurations per combination of stratum and test type.</li>
       </ol>
@@ -191,15 +208,15 @@ export default {
   <div class="sec-body">
     <h3>SPARC Intelligent Compaction Analyzer field trial</h3>
     <p>A real field trial from 23 and 24 May 2024 on a compaction area of about 12 m by 4 m with a Caterpillar CS44B roller. It contains intelligent-compaction observations together with nuclear-gauge density and moisture tests and laboratory moisture reports to AS 1289. Roller data and tests share the trial's own lane position tags, which is what makes real pairing possible. This is the dataset behind the paired study, the evidence-support examples and the retrospective check.</p>
-    <p class="table-note">Attribution: "SPARC Intelligent Compaction Analyzer (ICA) Dataset", trial of 2024-05-23/24. The dataset's documentation does not name a publisher or author, and LayerProof records that as stated. Raw files are not distributed on this site.</p>
+    <p class="table-note">Attribution: "SPARC Intelligent Compaction Analyzer (ICA) Dataset", trial of 2024-05-23/24. The dataset's documentation does not name a publisher or author, and VERNIQEL records that as stated. Raw files are not distributed on this site.</p>
     <h3 class="sub">MnDOT intelligent-compaction exports</h3>
-    <p>Real Minnesota DOT intelligent-compaction exports in Veta 9 format are used for import, validation, canonical storage, mapping and for showing how LayerProof behaves when there is roller data and no physical test. No scientific pairing was made with them.</p>
+    <p>Minnesota DOT intelligent-compaction sample exports in Veta 9 format were used in development to exercise import, validation, canonical storage and mapping. No scientific pairing was made with them. Their origin, terms of use and redistribution permission are not yet documented, so they are kept as restricted test fixtures: no screenshot, value or file from them is shown on this site, and the screenshots here come from the synthetic demonstration project.</p>
     <p class="table-note">An FHWA LTPP InfoPave DCP workbook is used to exercise the import of physical-test records. It comes from unrelated pavement sections, has no coordinates, and was never paired with the MnDOT data.</p>
     <h3 class="sub">Two public asphalt datasets</h3>
-    <p>Published supplementary tables used for the asphalt analysis above: one with CMV, CCV, AICV and RMV values and NNDG readings (170 records), one with HMV values and nuclear-gauge and core density (180 records). Both are processed publication data without project, site or coordinate information. They were examined outside LayerProof's project workflow and were never combined with the field-trial or MnDOT data.</p>
+    <p>Published supplementary tables used for the asphalt analysis above: one with CMV, CCV, AICV and RMV values and NNDG readings (170 records), one with HMV values and nuclear-gauge and core density (180 records). Both are processed publication data without project, site or coordinate information. They were examined outside VERNIQEL's project workflow and were never combined with the field-trial or MnDOT data.</p>
     <p class="table-note">The second accompanies "Optimizing Asphalt Compaction: Intelligent Compaction Roller Frequency and Machine Learning Prediction of In-Place Density". The first was supplied under a title beginning "Bayesian Optimization-Based SVR and RF Models for…"; its archive contains no citation. No licence is stated for either, so no records are redistributed here.</p>
     <h3 class="sub">NCHRP Research Report 933, Appendix F</h3>
-    <p>Published matrices of CMV, LWD modulus and FWD modulus from proof mapping on MnROAD cells 185, 186, 188 and 189 in 2017. Used only for the retrospective external spatial evaluation above, outside LayerProof's project workflow, and never combined with any other dataset.</p>
+    <p>Published matrices of CMV, LWD modulus and FWD modulus from proof mapping on MnROAD cells 185, 186, 188 and 189 in 2017. Used only for the retrospective external spatial evaluation above, outside VERNIQEL's project workflow, and never combined with any other dataset.</p>
     <p class="table-note">National Cooperative Highway Research Program, Transportation Research Board. Cited as a source; its content is not redistributed here.</p>
     <h3 class="sub">Synthetic fixtures</h3>
     <p>Small synthetic files exist to test the software. They are labelled synthetic wherever they appear and cannot anchor a real result.</p>

@@ -1,0 +1,106 @@
+{
+ "note": "Public claims governance (V1.6). Every capability statement on the public site carries one of four statuses. A claim moves from Research hypothesis to a stronger status only with recorded evidence. Source: docs/v16/V16_PUBLIC_CLAIMS_MATRIX.md.",
+ "statuses": {
+  "IMPLEMENTED": "Built and running in the software, covered by automated tests.",
+  "DEMONSTRATED": "Shown working end to end on recorded real or clearly labelled synthetic data.",
+  "RESEARCH_HYPOTHESIS": "Being studied. Not established, and not presented as a result.",
+  "FUTURE_CAPABILITY": "Planned. Not available in the software today."
+ },
+ "claims": [
+  {
+   "id": "provenance",
+   "claim": "Every imported file is fingerprinted, versioned and kept with its source, parser version and import history.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "cases",
+   "claim": "Verification cases keep the evidence snapshot, the decisions and the outcome in an append-only, hash-chained record.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "conflicts",
+   "claim": "Disagreeing evidence is listed in a conflict queue with possible explanations; the software does not choose the correct result.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "abstention",
+   "claim": "LayerProof abstains from interpretation when evidence is missing, inapplicable or conflicting, and says why.",
+   "status": "DEMONSTRATED"
+  },
+  {
+   "id": "why-here",
+   "claim": "Each verification recommendation explains why it exists, what a test there may resolve and what it will not resolve.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "engineer-decision",
+   "claim": "Engineer decisions (accept, change location, change modality, reject, defer) are recorded with a reason next to the original recommendation.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "report",
+   "claim": "A Verification Evidence Report can be exported as PDF, Markdown, JSON or a CSV package with checksums.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "policy",
+   "claim": "Agency and project policy values carry their source, name, version and origin; defaults are shown as defaults.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "roles",
+   "claim": "Project-level roles: Admin, Project Manager, Engineer, Inspector, Researcher and Viewer.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "pilot-infra",
+   "claim": "Pilot mode records the engineer's decision before the software recommendation is revealed, enforced by the database.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "field-mode",
+   "claim": "Inspectors can record field observations on a phone, with an offline queue that syncs later.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "windows-demo",
+   "claim": "A self-contained Windows demonstration edition runs the full product locally, with its own database and a synthetic demonstration project, without internet access.",
+   "status": "IMPLEMENTED"
+  },
+  {
+   "id": "retro",
+   "claim": "Verification prioritization was checked retrospectively on one field trial: no clear retrospective advantage over simple baselines.",
+   "status": "DEMONSTRATED"
+  },
+  {
+   "id": "external-spatial",
+   "claim": "Verification prioritization was checked on a public external spatial dataset: no clear advantage over the comparison baselines.",
+   "status": "DEMONSTRATED"
+  },
+  {
+   "id": "prioritization-value",
+   "claim": "Recommended verification locations help engineers place tests where they add more evidence than their usual practice.",
+   "status": "RESEARCH_HYPOTHESIS"
+  },
+  {
+   "id": "ic-relationship",
+   "claim": "Roller measurement values carry project-specific information about physical properties.",
+   "status": "RESEARCH_HYPOTHESIS"
+  },
+  {
+   "id": "operational",
+   "claim": "A structured case workflow shortens the time from a questionable result to a documented resolution.",
+   "status": "RESEARCH_HYPOTHESIS"
+  },
+  {
+   "id": "calibration",
+   "claim": "Project-specific calibration of roller values against physical tests, used only inside its recorded domain.",
+   "status": "FUTURE_CAPABILITY"
+  },
+  {
+   "id": "vendor-connectors",
+   "claim": "Direct connectors to roller-vendor and agency data systems.",
+   "status": "FUTURE_CAPABILITY"
+  }
+ ]
+}

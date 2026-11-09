@@ -1,5 +1,5 @@
 // Result tables and repeated blocks. Every number comes from src/data/results.json (built from the accepted tables).
-import { results, external, spatial, signed, fixed, esc } from "../site.mjs";
+import { results, external, spatial, signed, fixed, esc, brandName } from "../site.mjs";
 
 const R = results;
 const LAYER = { soil_layer1: "Soil layer 1", ugm_layer2: "UGM layer 2" };
@@ -33,7 +33,7 @@ export function week8Table(layer, design = "LEAVE_ONE_LOCATION_OUT") {
 <caption>${LAYER[layer]} — ${d.hidden_locations} hidden locations, ${DESIGN[design].toLowerCase()}</caption>
 <thead><tr><th scope="col">Ranking method</th><th scope="col" class="num">MRR</th><th scope="col" class="num">Hit@1</th><th scope="col" class="num">Hit@3</th><th scope="col" class="num">Hit@5</th><th scope="col" class="num">Mean normalized rank</th></tr></thead>
 <tbody>
-${methodRow("LayerProof frozen policy", d.WEEK7_FROZEN, true)}
+${methodRow("VERNIQEL frozen policy", d.WEEK7_FROZEN, true)}
 ${methodRow("Missing-anchor only (baseline)", d.MISSING_ANCHOR_ONLY)}
 ${methodRow("Random order (baseline, mean of 1,000)", d.RANDOM)}
 </tbody></table></div>
@@ -97,7 +97,7 @@ export function externalTable() {
 ${aRow("cmv", "CMV")}${aRow("ccv", "CCV")}${aRow("aicv", "AICV")}${aRow("rmv", "RMV")}
 ${bRow(BN, "NDG density")}${bRow(BC, "core density")}
 </tbody></table></div>
-<p class="table-note">Ordinary least squares, no tuning. For Asphalt A the held-out group is a source code column with 10 values. For Asphalt B the two figures are a layer thickness held out (3 values) and ID numbers held out (30). All hold-outs are inside one dataset; neither dataset identifies projects or sites, so none of this is independent project or site validation. Random-row figures are exploratory only and are not part of any LayerProof claim. One record of Asphalt B that looks column-shifted in the source is excluded here; results with it included are in the project's records and lead to the same conclusion.</p>`;
+<p class="table-note">Ordinary least squares, no tuning. For Asphalt A the held-out group is a source code column with 10 values. For Asphalt B the two figures are a layer thickness held out (3 values) and ID numbers held out (30). All hold-outs are inside one dataset; neither dataset identifies projects or sites, so none of this is independent project or site validation. Random-row figures are exploratory only and are not part of any VERNIQEL claim. One record of Asphalt B that looks column-shifted in the source is excluded here; results with it included are in the project's records and lead to the same conclusion.</p>`;
 }
 
 export function externalDatasets() {
@@ -106,7 +106,7 @@ export function externalDatasets() {
 }
 
 export const externalLabels = () => `<ul class="labels">${X.interpretation_labels.map((l) => `<li><span class="code">${l.label}</span><span>${esc(l.why)}</span></li>`).join("")}</ul>`;
-export const externalStatement = () => esc(X.public_statement);
+export const externalStatement = () => esc(brandName(X.public_statement));
 export const externalHead = X.headline;
 export const externalNotAssessable = X.not_assessable;
 
@@ -199,7 +199,7 @@ export function spatialAvailability() {
 }
 
 export const SPATIAL_LIMITS = [
-  "It is retrospective. Published values were revealed in a simulated order; no test was placed in the field because of LayerProof.",
+  "It is retrospective. Published values were revealed in a simulated order; no test was placed in the field because of VERNIQEL.",
   "It is one field study with four cells at one facility. The replays per combination are different starting configurations, not independent sites.",
   "The input is published, buffer-averaged and rounded. Raw roller records and raw deflection data were not available.",
   "The two sandy-subgrade strata could not be evaluated because their test positions are not exact in the source.",

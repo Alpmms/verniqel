@@ -1,11 +1,16 @@
-# Publishing the LayerProof website on GitHub Pages
+# Publishing the VERNIQEL website on GitHub Pages
 
-The website is the folder `website/`. It is self-contained. The LayerProof application repository stays private;
+The website is the folder `website/`. It is self-contained. The VERNIQEL (formerly LayerProof) application repository stays private;
 only the contents of `website/` go into a public repository.
 
 Expected address: `https://<github-user-or-org>.github.io/<repository>/`
 (or `https://<github-user-or-org>.github.io/` if the repository is named `<github-user-or-org>.github.io`).
 The site uses relative links, so it works under any repository name without changes.
+
+The live site is `https://alpmms.github.io/LayerProof/`, published from the public repository `Alpmms/LayerProof`.
+The repository name and the `/LayerProof/` path stay unchanged after the VERNIQEL rebrand, so every existing link
+keeps working. Updating it means replacing that repository's contents with this folder (see "Updating an existing
+site" below) — a separate, approved step.
 
 ## Steps
 1. **Create the public repository.** On GitHub: New repository, visibility Public, no template. Choose the name;
@@ -46,3 +51,10 @@ A failed check stops the deployment.
 
 ## Before every publication
 Run `npm test` and read `docs/final/FINAL_RELEASE_CHECKLIST.md`.
+
+## Updating an existing site (rebrand or content change)
+1. Build and check here: `npm ci && npm test && npm run check:browser`.
+2. In a clone of the public repository, on a new branch, replace everything except `.git/` with the contents of
+   `website/` (without `node_modules/` and `dist/`), commit, push the branch and open a pull request.
+3. Merging into `main` runs the Pages workflow. Then open the home page, Product, Research, Contact and a nested missing
+   path (for the 404 page). To roll back, revert the merge commit.

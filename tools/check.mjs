@@ -43,7 +43,8 @@ for (const f of pages) {
     }
   }
   for (const m of html.matchAll(/<img\b[^>]*>/g)) {
-    if (!/\salt="[^"]+"/.test(m[0])) fail(rel(f), "image without alt text");
+    const decorative = /\salt=""/.test(m[0]) && /\saria-hidden="true"/.test(m[0]);
+    if (!decorative && !/\salt="[^"]+"/.test(m[0])) fail(rel(f), "image without alt text");
     if (!/\swidth="\d+"/.test(m[0]) || !/\sheight="\d+"/.test(m[0])) fail(rel(f), "image without width/height (layout shift)");
   }
   if ((html.match(/<h1\b/g) || []).length !== 1) fail(rel(f), "page must have exactly one h1");
@@ -69,7 +70,7 @@ for (const f of files.filter((x) => [".html", ".css", ".js", ".txt", ".xml", ".s
   for (const [re, what] of PRIVATE) { const m = text.match(re); if (m) fail(rel(f), `${what}: "${m[0].slice(0, 60)}"`); }
 }
 
-// 4. claims. Text inside [data-not-claims] is the explicit "LayerProof is not ..." list and is excluded.
+// 4. claims. Text inside [data-not-claims] is the explicit "VERNIQEL is not ..." list and is excluded.
 const PROHIBITED = [
   /predicts? defects?/i, /detects? (weak|soft|defect)/i, /weak zones?/i, /guarantee/i, /optimal (next[- ])?test/i, /optimal location/i,
   /automated acceptance/i, /autonomous(ly)? (accept|decid|instruct)/i, /AI determines/i, /AI[- ]powered/i, /failure probability/i, /probability of failure/i,
@@ -82,22 +83,33 @@ const PROHIBITED = [
   /identif(y|ies|ied|ying) weak/i, /determines? acceptance/i, /automatically accepts?/i, /accepts? or rejects?/i, /optimal test location/i, /best test location/i,
   /proven across/i, /validated across/i, /field[- ]validated/i, /AI (determines|decides|selects|chooses)/i, /externally validated/i,
   /endorsed by|in partnership with|partner(ed|ship) with (NCHRP|TRB|MnDOT|MnROAD|UTEP)/i,
+  // V1.6 prohibited claims
+  /validated prioriti[sz]ation/i, /AI finds/i, /predicts? (the )?(density|stiffness|modulus)/i, /optimal verification/i, /reduces? (the amount of |physical )?testing/i,
+  /improves? acceptance/i, /detects? failures?/i, /automates? acceptance/i, /\bAI says\b/i, /\bsmart\b/i, /\bmagic\b/i, /willingness to pay/i, /\bROI\b|return on investment/i,
+  /validated savings/i, /prospective(ly)? (validated|proven)|field[- ]proven/i,
 ];
 // wording that would make the site read as unfinished
 const TEMPORARY = [/\bdraft\b/i, /\btemporary\b/i, /placeholder/i, /coming soon/i, /\bTODO\b/, /\bTBD\b/, /hosting pending/i, /being set up/i, /lorem ipsum/i, /under construction/i, /work in progress/i, /dev(eloper)? note/i];
 // phrases that are negations of a prohibited claim and are therefore intended
-const NEGATED = [/not production-certified/gi, /is not a prospective field pilot/gi, /not evidence of a usable predictor/gi];
-const REQUIRED_SITEWIDE = ["Decision support only — final engineering decisions remain with the engineer."];
+const NEGATED = [/not production-certified/gi, /is not a prospective field pilot/gi, /not evidence of a usable predictor/gi, /not automated acceptance/gi];
+const DISCLAIMER = "VERNIQEL provides engineering decision support. It does not determine construction acceptance or replace required agency testing, specifications, or professional judgment.";
+const REQUIRED_SITEWIDE = ["Decision support only — final engineering decisions remain with the engineer.", DISCLAIMER];
 const REQUIRED = {
-  "index.html": ["Know where to test next.", "Evidence-aware construction quality assurance for intelligent compaction workflows.", "Metehan Alp Memis", "Şevval Ulus Memiş", "Co-Founder", "NO CLEAR RETROSPECTIVE ADVANTAGE", "LayerProof does not replace field testing", "EVIDENCE_GAP_PRIORITY", "final test location selection remains with the engineer", "abstain when evidence is insufficient rather than manufacture confidence", "Prospective field pilot", "did not show a stable universal relationship with physical density",
-    "External Spatial Benchmark — NCHRP 933 / MnROAD", "retrospective external spatial evaluation", "NO CLEAR EXTERNAL SPATIAL PRIORITIZATION ADVANTAGE", "no clear advantage over the comparison baselines was observed", "eight nominal strata", "CMV", "LWD", "FWD", "Local grid defined by the source", "No endorsement by NCHRP, TRB, MnDOT, MnROAD", "Provenance and trust", "testing and quality-assurance organizations", "Field test", "do not own, sponsor or endorse LayerProof"],
-  "research.html": ["NO CLEAR RETROSPECTIVE ADVANTAGE", "LIMITED RETROSPECTIVE SIGNAL", "−0.40", "−0.08", "+0.09", "−0.50", "worse than a mean baseline", "must not be read as a validated relationship", "not a prospective field pilot", "not proof that a historical test location was the mathematically best location", "never paired with the MnDOT data", "20261005",
+  "index.html": ["Know when the evidence is enough.", "Explore the workflow", "Partner on a pilot", "Engineering decision support — not automated acceptance.", "More data does not automatically mean a better decision.",
+    "Provenance", "Applicability", "Disagreement", "Abstention", "A recommendation should explain itself.", "The engineer remains the decision-maker.", "Built for prospective evaluation.",
+    "VERNIQEL includes infrastructure for prospective field evaluation. Prospective performance has not yet been established.", "Negative results stay visible.", "Who it is for", "Designed for workflows such as",
+    "Bring VERNIQEL alongside your existing workflow.", "Discuss a pilot", "View research approach", "NO CLEAR RETROSPECTIVE ADVANTAGE", "NO CLEAR EXTERNAL SPATIAL PRIORITIZATION ADVANTAGE",
+    "did not show a stable universal relationship with physical density", "No prospective field pilot has been run", "No endorsement by NCHRP, TRB, MnDOT, MnROAD", "retrospective external spatial evaluation"],
+  "workflow.html": ["Evidence → Review → Conflict → Abstain / Proceed → Verify → Resolve → Record", "VERNIQEL does not decide which evidence is correct", "not an acceptance determination", "Engineering decision support — not automated acceptance."],
+  "product.html": ["What would resolve this?", "Nothing in the queue rates risk or quality", "not calibrated", "Implemented", "Future capability"],
+  "research.html": ["Negative results stay visible.", "Research hypothesis", "Future capability", "Prospective performance has not yet been established.",
+    "NO CLEAR RETROSPECTIVE ADVANTAGE", "LIMITED RETROSPECTIVE SIGNAL", "−0.40", "−0.08", "+0.09", "−0.50", "worse than a mean baseline", "must not be read as a validated relationship", "not a prospective field pilot", "not proof that a historical test location was the mathematically best location", "never paired with the MnDOT data", "20261005",
     "External evidence: two asphalt datasets", "External Spatial Benchmark — NCHRP 933 / MnROAD", "retrospective external spatial evaluation", "NO CLEAR EXTERNAL SPATIAL PRIORITIZATION ADVANTAGE", "no clear advantage over the comparison baselines was observed", "SOURCE_DEFINED_LOCAL_GRID", "Nothing was tuned on this dataset", "not independent sites", "limited power", "No endorsement by NCHRP, TRB, MnDOT, MnROAD", "No latitude, longitude or coordinate system was added", "The grid is not complete", "did not show a stable universal relationship with physical density", "PUBLISHED_AGGREGATED_REAL", "CROSS-DATASET RELATIONSHIP NOT STABLE", "EXTERNAL DOMAIN SHIFT OBSERVED",
     "INDEPENDENT PROJECT/SPATIAL VALIDATION NOT ASSESSABLE", "SPATIAL CANDIDATE PRIORITIZATION NOT ASSESSABLE FROM THIS DATASET", "CROSS-DATASET PREDICTIVE TRANSFER NOT COMPARABLE",
     "Random-row figures are exploratory only", "not raw project files", "Asphalt results say nothing about soil or granular layers", "Spatial next-test prioritization", "do not change this"],
   "evidence.html": ["SUPPORTED_EVIDENCE", "LIMITED_EVIDENCE", "OUT_OF_DOMAIN", "NO_PHYSICAL_ANCHOR", "UNRESOLVED_SPATIAL_REFERENCE", "VALIDATION_BLOCKED", "PREDICTIVE_MODEL_NOT_VALIDATED", "PREDICTIVE_UNCERTAINTY_NOT_AVAILABLE", "do not describe construction quality"],
-  "team.html": ["Metehan Alp Memis", "Şevval Ulus Memiş", "University of Illinois Urbana-Champaign", "Maryville University", "do not own, sponsor or endorse LayerProof"],
-  "pilot.html": ["No prospective field pilot has been run", "not production-certified", "Final test location selection remains with the engineer", "No clear advantage over the comparison baselines was observed"],
+  "about.html": ["Metehan Alp Memis", "Şevval Ulus Memiş", "University of Illinois Urbana-Champaign", "Maryville University", "do not own, sponsor or endorse VERNIQEL", "not funding for, or an endorsement of, the technology", "de-identified"],
+  "pilot.html": ["VERNIQEL Windows Pilot Demo", "Experience VERNIQEL locally through a self-contained Windows demonstration environment.", "Request Demo", "Discuss a Pilot", "there is no public download", "Evaluate VERNIQEL without changing your acceptance process.", "Start a pilot conversation", "Data we would ask for", "What a partner receives", "No prospective field pilot has been run", "not production-certified", "Final test location selection remains with the engineer", "No clear advantage over the comparison baselines was observed"],
   "contact.html": ["not commercially available", "Field-data collaboration", "Pilot opportunities", "Transportation agencies", "Contractors", "Testing and quality-assurance organizations", "Research groups"],
 };
 for (const f of pages) {
@@ -106,26 +118,28 @@ for (const f of pages) {
   for (const n of NEGATED) text = text.replace(n, " ");
   for (const re of PROHIBITED) { const m = text.match(re); if (m) fail(rel(f), `prohibited or unsupported claim wording: "${m[0]}"`); }
   const full = strip(html);
-  for (const s of REQUIRED_SITEWIDE) if (!full.includes(s)) fail(rel(f), `required statement missing: "${s}"`);
+  if (rel(f) !== "team.html" && rel(f) !== "404.html") for (const s of REQUIRED_SITEWIDE) if (!full.includes(s)) fail(rel(f), `required statement missing: "${s}"`);
+  if (!/<a class="nav-cta" href="[^"]*contact\.html"[^>]*>Partner with us<\/a>/.test(html)) fail(rel(f), "Partner with us navigation call to action missing");
+  for (const n of ["Product", "Workflow", "Research", "Pilot", "About"]) if (!new RegExp(`<nav id="site-nav"[\\s\\S]*?>${n}</a>`).test(html)) fail(rel(f), `main navigation item missing: ${n}`);
   for (const s of REQUIRED[rel(f)] || []) if (!full.includes(s)) fail(rel(f), `required content missing: "${s}"`);
   if (/Week[- ]?\d|WEEK\d/.test(full)) fail(rel(f), "internal milestone label (Week N) in public copy");
   for (const re of TEMPORARY) { const m = full.match(re); if (m) fail(rel(f), `temporary or unfinished wording: "${m[0]}"`); }
   if (/aria-disabled="true"|btn-pending|href="#"/.test(html)) fail(rel(f), "dead or disabled control");
-  if (/NCHRP|MnROAD|MnDOT|TRB\b/.test(full) && !/No endorsement by NCHRP, TRB, MnDOT, MnROAD|No university or agency owns, sponsors or endorses LayerProof/.test(full)) fail(rel(f), "names an agency without the no-endorsement statement");
+  if (/NCHRP|MnROAD|MnDOT|TRB\b/.test(full) && !/No endorsement by NCHRP, TRB, MnDOT, MnROAD|No university or agency owns, sponsors or endorses VERNIQEL/.test(full)) fail(rel(f), "names an agency without the no-endorsement statement");
   if (/NCHRP (Research Report )?933|NCHRP\/MnROAD/.test(full) && !/retrospective/i.test(full)) fail(rel(f), "mentions the NCHRP benchmark without the word retrospective");
 }
 
-// 5. equal prominence of the founders on the team page (same element, same role label, similar length)
+// 5. equal prominence of the founders on the about page (same element, same role label, similar length)
 {
-  const t = readFileSync(join(dist, "team.html"), "utf8");
+  const t = readFileSync(join(dist, "about.html"), "utf8");
   const cards = [...t.matchAll(/<article class="person">([\s\S]*?)<\/article>/g)].map((m) => m[1]);
-  if (cards.length !== 2) fail("team.html", `expected exactly 2 founder cards, found ${cards.length}`);
+  if (cards.length !== 2) fail("about.html", `expected exactly 2 founder cards, found ${cards.length}`);
   else {
     const len = cards.map((c) => strip(c).length);
-    if (Math.max(...len) / Math.min(...len) > 1.35) fail("team.html", `founder cards differ too much in length (${len.join(" vs ")})`);
-    for (const c of cards) if (!/<p class="role">Co-Founder<\/p>/.test(c)) fail("team.html", "a founder card lacks the Co-Founder role");
-    const tags = cards.map((c) => (c.match(/<h2[^>]*>/) || [""])[0]);
-    if (tags[0] !== tags[1]) fail("team.html", "founder names use different heading markup");
+    if (Math.max(...len) / Math.min(...len) > 1.35) fail("about.html", `founder cards differ too much in length (${len.join(" vs ")})`);
+    for (const c of cards) if (!/<p class="role">Co-Founder<\/p>/.test(c)) fail("about.html", "a founder card lacks the Co-Founder role");
+    const tags = cards.map((c) => (c.match(/<h[23][^>]*>/) || [""])[0]);
+    if (tags[0] !== tags[1]) fail("about.html", "founder names use different heading markup");
   }
 }
 
@@ -192,7 +206,24 @@ for (const f of pages) {
   }
 }
 
+// 9. claims governance: every status label used comes from the claims register; the register uses only the four statuses
+{
+  const reg = JSON.parse(readFileSync(join(root, "src/data/claims.json"), "utf8"));
+  const allowed = new Set(Object.keys(reg.statuses));
+  if (allowed.size !== 4 || !["IMPLEMENTED", "DEMONSTRATED", "RESEARCH_HYPOTHESIS", "FUTURE_CAPABILITY"].every((k) => allowed.has(k))) fail("src/data/claims.json", "status set changed");
+  for (const c of reg.claims) if (!allowed.has(c.status)) fail("src/data/claims.json", `unknown status ${c.status} for ${c.id}`);
+  for (const id of ["prioritization-value", "ic-relationship", "operational"]) if ((reg.claims.find((c) => c.id === id) || {}).status !== "RESEARCH_HYPOTHESIS") fail("src/data/claims.json", `${id} must remain a research hypothesis until prospective evidence exists`);
+}
+
+// 10. V2.1 §31: no public screenshot may come from the restricted MnDOT sample exports (unresolved provenance)
+{
+  const shots = JSON.parse(readFileSync(join(root, "src/assets/shots/manifest.json"), "utf8"));
+  for (const s of shots)
+    if (/mndot|veta9|restricted/i.test(`${s.id} ${s.src} ${s.data}`)) fail("src/assets/shots/manifest.json", `screenshot ${s.id} derives from restricted MnDOT sample data`);
+  for (const f of files) if (/mndot/i.test(rel(f)) && /\.(webp|png|jpe?g)$/i.test(f)) fail(rel(f), "image file named after the restricted MnDOT samples");
+}
+
 const total = files.reduce((n, f) => n + statSync(f).size, 0);
 console.log(`Checked ${pages.length} pages, ${files.length} files, ${(total / 1024).toFixed(0)} KiB total.`);
 if (findings.length) { console.error(`\n${findings.length} finding(s):\n- ${findings.join("\n- ")}`); process.exit(1); }
-console.log("OK: links, assets, private-content scan, claims scan, final-wording scan, required statements, founder parity, accepted numbers, external evidence, external spatial benchmark.");
+console.log("OK: links, assets, private-content scan, claims scan, final-wording scan, required statements, founder parity, accepted numbers, external evidence, external spatial benchmark, no restricted-sample screenshots.");
