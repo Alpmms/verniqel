@@ -7,19 +7,17 @@ Expected address: `https://<github-user-or-org>.github.io/<repository>/`
 (or `https://<github-user-or-org>.github.io/` if the repository is named `<github-user-or-org>.github.io`).
 The site uses relative links, so it works under any repository name without changes.
 
-The live site is `https://alpmms.github.io/LayerProof/`, published from the public repository `Alpmms/LayerProof`.
-The repository name and the `/LayerProof/` path stay unchanged after the VERNIQEL rebrand, so every existing link
-keeps working. Updating it means replacing that repository's contents with this folder (see "Updating an existing
-site" below) — a separate, approved step.
+The site is published from `Alpmms/verniqel` at `https://alpmms.github.io/verniqel/`.
+The account's existing Pages site contains redirects from the former `/LayerProof/` page addresses.
 
 ## Steps
 1. **Create the public repository.** On GitHub: New repository, visibility Public, no template. Choose the name;
    it becomes the last part of the address.
 2. **Push the website source.** From a copy of this project:
    ```
-   cp -r website ~/layerproof-site && cd ~/layerproof-site
+   cp -r website ~/verniqel-site && cd ~/verniqel-site
    rm -rf node_modules dist
-   git init -b main && git add -A && git commit -m "LayerProof public website"
+   git init -b main && git add -A && git commit -m "VERNIQEL public website"
    git remote add origin git@github.com:<github-user-or-org>/<repository>.git
    git push -u origin main
    ```

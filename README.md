@@ -5,6 +5,8 @@ roller data and physical field tests side by side, shows where the evidence does
 helps engineers weigh where another physical test may add evidence. Decision support only — final engineering
 decisions remain with the engineer. This repository is the static public website; it does not contain the application.
 
+[Visit the VERNIQEL website](https://alpmms.github.io/verniqel/).
+
 | Question | Answer |
 |---|---|
 | Run the site locally | `npm run build && npm run preview`, then open the address it prints (Node 20 or newer; no install needed) |

@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "LayerProof public website (static, GitHub Pages). No backend, no runtime dependencies.",
+  "description": "VERNIQEL public website for field verification in pavement and earthwork.",
   "scripts": {
     "build": "node build.mjs",
     "dev": "node build.mjs && node tools/serve.mjs --watch",

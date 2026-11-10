@@ -1,4 +1,4 @@
-# Builds and deploys the LayerProof public website to GitHub Pages.
+# Builds and deploys the VERNIQEL public website to GitHub Pages.
 # This file is active when the CONTENTS of website/ are the root of the public website repository.
 # Repository Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
 name: Deploy website to GitHub Pages
