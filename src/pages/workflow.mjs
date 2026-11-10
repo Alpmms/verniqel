@@ -22,7 +22,8 @@ export default {
   ${workflowDiagram()}
 </div></section>
 
-<section class="sec"><div class="wrap wsteps">
+<section class="sec" aria-labelledby="steps-h"><div class="wrap wsteps">
+<h2 id="steps-h" class="sr-only">The seven steps</h2>
 ${step(1, "evidence", "Evidence", `<p>Roller exports, physical test results, inspector observations and project context are imported through versioned adapters. The original file is kept byte for byte with its SHA-256 fingerprint, parser version and mapping. ${claim("provenance")}</p>`)}
 ${step(2, "review", "Review", `<p>An evidence review aligns the sources by location, layer, pass and time, and states for each piece of evidence whether it can be located, aligned and compared. Units and vendor metrics are kept as reported: a roller value is not treated as a density or a stiffness.</p>`)}
 ${step(3, "conflict", "Conflict", `<p>Where aligned evidence disagrees beyond a stated tolerance, the pair goes to the conflict queue with possible explanations and what would reduce uncertainty. Tolerances come from the project policy, with their source and version shown. VERNIQEL does not decide which evidence is correct. ${claim("conflicts")}</p>`)}
